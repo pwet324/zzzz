@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>I Miss You</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f8f8;
+            text-align: center;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            position: relative;
+            padding: 50px;
+        }
+
+        h1 {
+            color: #ff69b4;
+            font-size: 3em;
+        }
+
+        .question {
+            margin-top: 50px;
+            font-size: 1.5em;
+            color: #333;
+        }
+
+        .buttons {
+            margin-top: 30px;
+        }
+
+        button {
+            background-color: #ff69b4;
+            color: white;
+            padding: 15px 40px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #ff1493;
+        }
+
+        .flowers {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+        }
+
+        .flowers img {
+            width: 50px;
+            position: absolute;
+            animation: float 6s linear infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0);
+            }
+            100% {
+                transform: translateY(-100vh);
+            }
+        }
+
+        .butterfly {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: butterflyAnimation 5s linear infinite;
+        }
+
+        @keyframes butterflyAnimation {
+            0% {
+                transform: translateX(-50%) translateY(0);
+            }
+            50% {
+                transform: translateX(-50%) translateY(-50px);
+            }
+            100% {
+                transform: translateX(-50%) translateY(0);
+            }
+        }
+
+        footer {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #888;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>I Miss You</h1>
+        <div class="question">
+            <p>Do you miss me too?</p>
+        </div>
+        <div class="buttons">
+            <button id="yesButton">Yes</button>
+            <button id="noButton">No</button>
+        </div>
+
+        <div class="flowers"></div>
+
+        <div class="butterfly">
+            <img src="https://example.com/butterfly.png" alt="butterfly">
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 I Miss You</p>
+    </footer>
+
+    <script>
+        // Event listeners for the buttons
+        document.getElementById('yesButton').addEventListener('click', function() {
+            let flowersDiv = document.querySelector('.flowers');
+            flowersDiv.innerHTML = ''; // Clear previous flowers
+
+            // Display many flowers
+            for (let i = 0; i < 20; i++) {
+                let flower = document.createElement('img');
+                flower.src = 'https://example.com/flower.png'; // Change to your flower image URL
+                flower.style.left = `${Math.random() * 100}vw`;
+                flower.style.animationDuration = `${Math.random() * 4 + 4}s`; // Random float speed
+                flowersDiv.appendChild(flower);
+            }
+
+            // Show "weh?" message
+            setTimeout(function() {
+                alert('Weh?');
+            }, 1000);
+
+            // Ask again after a while
+            setTimeout(function() {
+                alert('Ayieh!');
+            }, 3000);
+
+            // Notify me if Yes is clicked
+            fetch('https://your-webhook-url.com'); // Replace with your webhook to notify you
+        });
+
+        document.getElementById('noButton').addEventListener('click', function() {
+            alert('Please, let me know you miss me!');
+        });
+    </script>
+
+</body>
+</html>
