@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>I Miss You</title>
+    <style>
+        /* Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Background and falling hearts */
+        body {
+            background-color: #fdf0f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+            color: #d75d73;
+        }
+
+        /* Heart animation */
+        .heart-fall {
+            position: absolute;
+            top: -10%;
+            font-size: 1.5rem;
+            color: #ff6b81;
+            animation: fall 5s linear infinite;
+        }
+        @keyframes fall {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Container */
+        .container {
+            text-align: center;
+            color: #d75d73;
+            max-width: 600px;
+            padding: 20px;
+            border-radius: 10px;
+            z-index: 1; /* Display above falling hearts */
+        }
+
+        /* Text */
+        .message {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        .subtext {
+            font-size: 1.2rem;
+            color: #f28b97;
+            margin-top: 10px;
+        }
+
+        /* Buttons */
+        .buttons {
+            margin-top: 20px;
+        }
+        .btn {
+            background-color: #d75d73;
+            color: white;
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: background-color 0.3s, transform 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            border: none;
+        }
+        .btn:hover {
+            background-color: #f28b97;
+        }
+
+        /* Moving "No" Button */
+        .btn.no:hover {
+            transform: translate(calc(-50px + 100px * (Math.random() - 0.5)), calc(-50px + 100px * (Math.random() - 0.5)));
+        }
+
+        /* Flowers & Butterflies */
+        .flower, .butterfly {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            opacity: 0;
+            transition: opacity 1s ease-in-out, transform 3s ease-in-out;
+            transform: scale(0.5) rotate(0deg);
+        }
+        .flower {
+            background-image: url('https://via.placeholder.com/50/ff6b81'); /* Replace with flower image URL */
+            background-size: cover;
+        }
+        .butterfly {
+            background-image: url('https://via.placeholder.com/50/ffca76'); /* Replace with butterfly image URL */
+            background-size: cover;
+        }
+
+        /* Cat Text */
+        .cat-icon {
+            font-size: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="message">I Miss You</div>
+        <div class="subtext">Can we be together again?</div>
+        <div class="buttons">
+            <!-- Yes Button with Happy Cat Icon Text -->
+            <button class="btn yes" onclick="handleFirstYes()">
+                <span class="cat-icon">😺</span> Yes
+            </button>
+            <!-- No Button with Sad Cat Icon Text -->
+            <button class="btn no" onclick="moveNoButton()">
+                <span class="cat-icon">😿</span> No
+            </button>
+        </div>
+        <div id="responseMessage" class="subtext"></div> <!-- This will show "Weh?" or "Ayieh" -->
+    </div>
+
+    <script>
+        let firstYesClicked = false;
+
+        // Function to create falling hearts in the background
+        function createHearts() {
+            for (let i = 0; i < 20; i++) {
+                const heart = document.createElement('div');
+                heart.classList.add('heart-fall');
+                heart.innerText = '💖';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDuration = Math.random() * 2 + 3 + 's';
+                document.body.appendChild(heart);
+
+                // Remove the heart after animation
+                heart.addEventListener('animationend', () => {
+                    heart.remove();
+                });
+            }
+        }
+
+        // Function to make the "No" button move randomly
+        function moveNoButton() {
+            const noButton = document.querySelector('.btn.no');
+            const x = Math.random() * (window.innerWidth - noButton.clientWidth);
+            const y = Math.random() * (window.innerHeight - noButton.clientHeight);
+            noButton.style.position = 'absolute';
+            noButton.style.left = `${x}px`;
+            noButton.style.top = `${y}px`;
+        }
+
+        // Handle the first click of "Yes"
+        function handleFirstYes() {
+            if (!firstYesClicked) {
+                document.getElementById("responseMessage").textContent = "Weh?";
+                firstYesClicked = true;
+            } else {
+                // If "Yes" clicked again, show "Ayieh"
+                document.getElementById("responseMessage").textContent = "Ayieh";
+
+                // Show flowers and butterflies
+                showFlowers();
+
+                // Notify you when she clicked "Yes" twice
+                console.log("She clicked 'Yes' twice!");
+
+                // Redirect to Instagram after a short delay
+                setTimeout(() => {
+                    window.open("https://www.instagram.com/kvzzei/", "_blank");
+                }, 3000);
+            }
+        }
+
+        // Function to display flowers and butterflies when "Yes" is clicked twice
+        function showFlowers() {
+            for (let i = 0; i < 20; i++) {
+                const flower = document.createElement('div');
+                flower.classList.add('flower');
+                document.body.appendChild(flower);
+
+                flower.style.left = Math.random() * 100 + 'vw';
+                flower.style.top = Math.random() * 100 + 'vh';
+                flower.style.opacity = 1;
+                flower.style.transform = `scale(${0.5 + Math.random()}) rotate(${Math.random() * 360}deg)`;
+
+                setTimeout(() => flower.remove(), 3000);
+            }
+
+            for (let i = 0; i < 10; i++) {
+                const butterfly = document.createElement('div');
+                butterfly.classList.add('butterfly');
+                document.body.appendChild(butterfly);
+
+                butterfly.style.left = Math.random() * 100 + 'vw';
+                butterfly.style.top = Math.random() * 100 + 'vh';
+                butterfly.style.opacity = 1;
+                butterfly.style.transform = `scale(${0.7 + Math.random()}) rotate(${Math.random() * 360}deg)`;
+
+                setTimeout(() => butterfly.remove(), 3000);
+            }
+        }
+
+        // Start falling hearts on page load
+        createHearts();
+        setInterval(createHearts, 3000);
+    </script>
+</body>
+</html>
